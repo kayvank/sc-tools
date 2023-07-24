@@ -143,6 +143,7 @@ constraints:
   , cardano-node == 1.35.4
   , generic-arbitrary == 0.2.2
   , iohk-monitoring >= 0.1.11
+  , unix >=2.8.0
 
   -- Could probably be bumped with minor work in the wallet
   , resource-pool == 0.2.3.2
