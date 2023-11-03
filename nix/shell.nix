@@ -3,28 +3,34 @@
 cabalProject:
 
 let
-  cardano-cli = cabalProject.hsPkgs.cardano-cli.components.exes.cardano-cli;
-  cardano-node = cabalProject.hsPkgs.cardano-node.components.exes.cardano-node;
-  cardano-submit-api = cabalProject.hsPkgs.cardano-submit-api.components.exes.cardano-submit-api;
+  cardano-cli = inputs.cardano-node.legacyPackages.cardano-cli;
+  cardano-node = inputs.cardano-node.legacyPackages.cardano-node;
+  cardano-submit-api = inputs.cardano-node.legacyPackages.cardano-submit-api;
 in
 
 {
-  name = "stablecoin-plutus";
+  name = "sc-tools";
 
   packages = [
+    cardano-cli
+    cardano-node
+    cardano-submit-api
     pkgs.ghcid
     pkgs.haskellPackages.hoogle
   ];
 
-  # env = {
-  #   CARDANO_CLI = "${cardano-cli}/bin/cardano-cli";
-  #   CARDANO_NODE = "${cardano-node}/bin/cardano-node";
-  #   CARDANO_SUBMIT_API = "${cardano-submit-api}/bin/cardano-submit-api";
-  # };
+  env = {
+    CARDANO_CLI = "${cardano-cli}/bin/cardano-cli";
+    CARDANO_NODE = "${cardano-node}/bin/cardano-node";
+    CARDANO_SUBMIT_API = "${cardano-submit-api}/bin/cardano-submit-api";
+  };
 
   preCommit = {
     cabal-fmt.enable = true;
     stylish-haskell.enable = true;
     nixpkgs-fmt.enable = true;
   };
+  shellHook = ''
+'';
+
 }
